@@ -22,8 +22,11 @@
         "name": "next"
       }
     ],
+    "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"]
-    }
+      "@/*": ["src/*"]
+    },
+    "target": "es2016",
+    "forceConsistentCasingInFileNames": true
   }
 }

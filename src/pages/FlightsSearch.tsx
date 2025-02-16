@@ -1,31 +1,27 @@
-import React, { useState } from "react";
-import { searchFlights } from "@/services/flightsApi";
-import { Flight } from "@/types/flights";
-import SearchBar from "@/components/SearchBar";
-import FlightCard from "@/components/FlightCard";
-
-import { EditedSearch, Result } from "../types/flightsResult";
+import React, { useState } from 'react';
+import { searchFlights } from '../services/flightsApi';
+import { Flight } from '../types/flights';
+import SearchBar from '../components/SearchBar';
+import FlightCard from '../components/FlightCard';
+import { Result } from '../types/flightsResult';
 
 const FlightsSearch: React.FC = () => {
   const [flights, setFlights] = useState<Flight[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
 
   const handleSearch = async (
-    origin: string,
-    destination: string,
-    date: string
-  ) => {
+    origin: { skyId: string; entityId: string },
+    destination: { skyId: string; entityId: string },
+    date: string,
+  ): Promise<void> => {
     setLoading(true);
-    const results = await searchFlights(origin, destination, date);
-
-    const editedSearch: EditedSearch[] = results.map((i: Result) => ({
-      price: i?.price?.formatted,
-      origin: i?.legs?.[0]?.origin?.name,
-      destination: i?.legs?.[0]?.destination?.name,
-      airline: i?.legs?.[0]?.carriers?.marketing?.[0]?.name,
+    const results: Result[] = await searchFlights(origin, destination, date);
+    const editedSearch: Flight[] = results.map((i: Result) => ({
+      price: i.price?.formatted || 'N/A',
+      origin: i.legs?.[0]?.origin?.name || 'N/A',
+      destination: i.legs?.[0]?.destination?.name || 'N/A',
+      airline: i.legs?.[0]?.carriers?.[0]?.marketing?.[0]?.name || 'N/A',
     }));
-
-    console.log("results :>> ", editedSearch);
     setFlights(editedSearch);
     setLoading(false);
   };

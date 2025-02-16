@@ -1,25 +1,19 @@
-interface Carrier {
-  marketing: { name: string }[];
-}
-
-interface Leg {
-  origin: { name: string };
-  destination: { name: string };
-  carriers: Carrier[];
-}
-
-interface Price {
-  formatted: string;
-}
-
 export interface Result {
-  legs: Leg[];
-  price: Price;
+  price?: {
+    formatted?: string;
+  };
+  legs?: {
+    origin?: { name?: string };
+    destination?: { name?: string };
+    carriers?: {
+      marketing?: { name?: string }[];
+    }[];
+  }[];
 }
 
 export interface EditedSearch {
-  origin: string | undefined;
-  destination: string | undefined;
-  price: string | undefined;
-  airline: string | undefined;
+  price?: string;
+  origin?: string;
+  destination?: string;
+  airline?: string;
 }

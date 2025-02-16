@@ -1,7 +1,6 @@
 export interface Flight {
-    origin: string;
-    destination: string;
-    price: number;
-    airline: string;
-  }
-  
+  price: string;
+  origin: string;
+  destination: string;
+  airline: string;
+}
